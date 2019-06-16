@@ -6,16 +6,10 @@ import java.nio.ByteBuffer;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import com.saki9.barrageCatch.service.BarrageCatchService;
+import com.saki9.barrageCatch.utils.PrintUtils;
 
-@Component
 public class WebSocket extends WebSocketClient {
-	@Autowired
-	private BarrageCatchService barrageCatchServiceimpl;
-	
 	public WebSocket(String url) throws URISyntaxException {
         super(new URI(url));
     }
@@ -27,12 +21,12 @@ public class WebSocket extends WebSocketClient {
 
     @Override
     public void onMessage(ByteBuffer message) {
-    	// barrageCatchServiceimpl.GetMessage(message);
+    	PrintUtils.ByteBufferToString(message);
     }
 
     @Override
     public void onClose(int paramInt, String paramString, boolean paramBoolean) {
-        System.out.println("链接已关闭");
+        System.out.println("Closed");
     }
  
     @Override
