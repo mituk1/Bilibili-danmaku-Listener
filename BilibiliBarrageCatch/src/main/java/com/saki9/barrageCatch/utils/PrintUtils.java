@@ -11,7 +11,7 @@ public class PrintUtils {
 		if (resultStr == null) {
 			return;
 		}
-		String[] split = resultStr.split("---------");
+		String[] split = resultStr.split("%split%");
 		for (String string : split) {
 			System.out.println(string);
 		}
@@ -23,7 +23,7 @@ public class PrintUtils {
 		if(hexString.length() == endIndex){
 			return hexString.substring(32, endIndex);
 		}
-		sb.append(hexString.substring(32, endIndex) + "2d2d2d2d2d2d2d2d2d" + stringToArrayStrByte(hexString.substring(endIndex, hexString.length())));
+		sb.append(hexString.substring(32, endIndex) + "706c697425" + stringToArrayStrByte(hexString.substring(endIndex, hexString.length())));
 		return sb.toString();
 	}
 	

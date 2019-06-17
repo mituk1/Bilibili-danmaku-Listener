@@ -84,18 +84,6 @@ public class ByteUtils {
     }
     
     /**
-     * 将byte数组转为bytebuffer
-     * @param value
-     * @return
-     */
-    public static ByteBuffer encodeValue(byte[] value) {
-        ByteBuffer byteBuffer = ByteBuffer.allocate(value.length);
-        byteBuffer.clear();
-        byteBuffer.get(value, 0, value.length);
-        return byteBuffer;
-    }
-    
-    /**
      * 16进制转换成为string类型字符串
      * @param s
      * @return

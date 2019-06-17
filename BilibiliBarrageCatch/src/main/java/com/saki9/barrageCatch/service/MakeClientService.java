@@ -6,7 +6,7 @@ import java.net.URISyntaxException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.saki9.barrageCatch.conf.WebSocket;
+import com.saki9.barrageCatch.conf.WebSocketProxy;
 import com.saki9.barrageCatch.utils.ByteUtils;
 
 @Service
@@ -22,7 +22,12 @@ public class MakeClientService {
 	@Value("${bilibili.url}")
 	private String url;
 	/**
-	 * 握手包
+	 * 握手请求头
+	 */
+	@Value("${bilibili.firstByte}")
+	private String firstByte;
+	/**
+	 * 握手请求体
 	 */
 	@Value("${bilibili.clientID}")
 	private String clientID;
@@ -33,16 +38,14 @@ public class MakeClientService {
 	private String heartByte;
 	
 	public void StartService() throws URISyntaxException, InterruptedException, UnsupportedEncodingException {
-		WebSocket client = new WebSocket(url);
-		System.out.println("Loading");
-        client.connectBlocking();
-        System.out.println("success");
-        
-        String joinRequestCode = "000000" + Integer.toHexString(clientID.getBytes().length + 16) + "001000010000000700000001";
-        
-        byte[] byte_1 = ByteUtils.hexToByteArray(joinRequestCode);
+		WebSocketProxy client = new WebSocketProxy(url);
+		
+		firstByte = firstByte.replace("%replce%", Integer.toHexString(clientID.getBytes().length + 16));
+        byte[] byte_1 = ByteUtils.hexToByteArray(firstByte);
         byte[] byte_2 = clientID.getBytes("UTF-8");
-        client.send(ByteUtils.byteMerger(byte_1, byte_2));
+        byte[] reqCode = ByteUtils.byteMerger(byte_1, byte_2);
+        
+        client.send(reqCode);
         
         Thread heartThread = new Thread(new HeartByteService(client, heartByte));
         heartThread.start();
