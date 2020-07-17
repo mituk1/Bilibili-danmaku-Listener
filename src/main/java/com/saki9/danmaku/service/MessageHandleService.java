@@ -20,6 +20,11 @@ public class MessageHandleService {
         }
     }
 
+    /**
+     * @param message 如果是 message 是弹幕类型，则需要解压拆分
+     * @return List<message>
+     * @throws DataFormatException DataFormatException
+     */
     private List<String> messageToJson(ByteBuffer message) throws DataFormatException {
         byte[] messageBytes = message.array();
         byte[] mainMessageBytes = Arrays
@@ -37,6 +42,10 @@ public class MessageHandleService {
         return splitStringToJson(new String(newByte, StandardCharsets.UTF_8));
     }
 
+    /**
+     * @param str 包含多条 message 的字符串
+     * @return List<message>
+     */
     private static List<String> splitStringToJson(String str) {
         List<String> result = new ArrayList<>();
         for (int i = 1, count = 1; i < str.length(); i++) {

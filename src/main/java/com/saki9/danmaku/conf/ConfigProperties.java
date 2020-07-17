@@ -1,4 +1,4 @@
-package com.saki9.danmaku.utils;
+package com.saki9.danmaku.conf;
 
 import java.io.IOException;
 import java.io.InputStream;
