@@ -69,7 +69,7 @@ public class MakeClientService {
 		byte[] result = new byte[(hexlen / 2)];
 
 		for (int i = 0, j = 0; i < hexlen; i += 2, j++) {
-			result[j] = (byte)Integer.parseInt(hexStr,16);
+			result[j] = (byte)Integer.parseInt(hexStr.substring(i, i + 2),16);
 		}
 		return result;
 	}
